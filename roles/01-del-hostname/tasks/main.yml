@@ -1,0 +1,7 @@
+---
+# tasks file for pi-del-hostname
+- name: delete /etc/hostname
+  become: yes
+  file:
+    state: absent
+    path: "/etc/hostname"

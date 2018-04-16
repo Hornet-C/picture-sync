@@ -1,0 +1,11 @@
+---
+- hosts: wifi
+  gather_facts: yes
+
+  roles:
+    - 00-upgrade
+    - 01-del-hostname
+    - 02-setup
+    - 02-setup-wifi
+    - 03-canon
+    - 00-reboot

@@ -1,0 +1,14 @@
+[Unit]
+Description=Capture with gphoto %i
+After=dev-ccapture.device
+BindsTo=dev-ccapture.device
+Requisite=dev-ccapture.device
+
+[Service]
+ExecStart=/home/{{ ansible_user }}/camera-capture/camera-capture.sh
+User={{ ansible_user }}
+Restart=always
+SuccessExitStatus=1 2 8 9 15 SIGKILL
+KillMode=process
+[Install]
+WantedBy=dev-ccapture.device

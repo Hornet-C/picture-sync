@@ -1,0 +1,2 @@
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{product}=="Canon Digital Camera", ATTRS{idVendor}=="04a9", GROUP="{{ ansible_user }}", TAG+="systemd", SYMLINK+="ccapture"
+ACTION=="remove", SUBSYSTEM=="usb", ATTRS{product}=="Canon Digital Camera", ATTRS{idVendor}=="04a9"

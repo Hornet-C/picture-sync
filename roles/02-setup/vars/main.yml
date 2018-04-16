@@ -1,0 +1,13 @@
+---
+# vars file for canon
+locale: "de_DE.UTF-8"
+keyboard: "pc104"
+keyboard_layout: "de"
+timezone: "Europe/Berlin"
+locale_options:
+  # Disable Default (GB) Locale
+  - regexp: "^#?en_GB.UTF-8 UTF-8"
+    line: "# en_GB.UTF-8 UTF-8"
+  # Enable DE Locale
+  - regexp: "^#?de_DE.UTF-8 UTF-8"
+    line: "de_DE.UTF-8 UTF-8"

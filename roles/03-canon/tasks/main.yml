@@ -1,0 +1,54 @@
+---
+# tasks file for canon
+- name: Install necessary packages
+  become: yes
+  apt:
+    name: '{{ item }}'
+    update_cache: yes
+  with_items:
+    - fuse
+    - gphotofs
+    - gphotofs
+    - rsync
+
+- name: edit /etc/fuse.conf
+  become: yes
+  lineinfile:
+    path: /etc/fuse.conf
+    state: present
+    regexp: '^user_allow_other'
+    insertafter: '^#user_allow_other'
+    line: 'user_allow_other'
+
+# set udev rule
+- name: set udev rule
+  become: yes
+  template:
+    src: 30-capture.rules.j2
+    dest: /etc/udev/rules.d/30-capture.rules
+
+# set systemd file
+- name: set systemd rule
+  become: yes
+  template:
+    src: capture.service.j2
+    dest: /etc/systemd/system/capture.service
+
+- name: just force systemd to reread configs (2.4 and above)
+  become: yes
+  systemd:
+    daemon_reload: yes
+    name: capture
+    state: stopped
+    enabled: yes
+
+- name: 'create /home/{{ ansible_user }}/camera-capture'
+  file:
+    path: '/home/{{ ansible_user }}/camera-capture'
+    state: directory
+
+- name: 'copy camera-capture-script to /home/{{ ansible_user }}/camera-capture/camera-capture.sh'
+  copy:
+    src: camera-capture.sh
+    dest: '/home/{{ ansible_user }}/camera-capture/camera-capture.sh'
+    mode: 0755

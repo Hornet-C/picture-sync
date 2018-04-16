@@ -1,0 +1,47 @@
+---
+# tasks file for 02-setup-wifi
+# Set hostname
+- name: Set hostname
+  become: yes
+  shell: echo "{{ hostname }}" > /etc/hostname
+
+- name: Copy dynv6.sh
+  become: yes
+  template:
+    src: dynv6.sh
+    dest: '/usr/sbin'
+    mode: 0755
+
+- name: Copy wifi configs
+  become: yes
+  template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    mode: '{{ item.mode }}'
+  with_items:
+      - src: wpa_supplicant.conf
+        dest: '/etc/wpa_supplicant/'
+        mode: '0600'
+      - src: interfaces
+        dest: '/etc/network/'
+        mode: '0644'
+
+# add cronjob dynv6 every 10 min
+- name: add cronjob dynv6 every 10 min
+  become: yes
+  cron:
+    name: 'dynv6 every 10 minute s'
+    minute: '*/20'
+    hour: '*'
+    day: '*'
+    month: '*'
+    weekday: '*'
+    job: '/usr/sbin/dynv6.sh {{ dynv6 }} {{ token}} wlan0 >/var/log/dynv6 2>&1'
+
+# add cronjob dynv6 every 10 min
+- name: add cronjob dynv6 every reboot
+  become: yes
+  cron:
+    name: 'dynv6 every reboot'
+    special_time: 'reboot'
+    job: '/usr/sbin/dynv6.sh {{ dynv6 }} {{ token}} wlan0 >/var/log/dynv6 2>&1'

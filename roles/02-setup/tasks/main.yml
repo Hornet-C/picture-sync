@@ -1,0 +1,42 @@
+---
+# Configure /etc/locale.gen values
+- name: Configure option values in /etc/locale.gen file.
+  become: yes
+  lineinfile:
+    dest: /etc/locale.gen
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    insertafter: EOF
+    state: present
+  with_items: "{{ locale_options }}"
+
+# Generate Locale
+- name: Generate Locale
+  become: yes
+  command: locale-gen {{ locale }}
+
+# Set Locale
+- name: Set Locale
+  become: yes
+  command: update-locale LC_ALL={{ locale }} LANG={{ locale }}
+
+# set /etc/timezone
+- name: set /etc/timezone
+  become: yes
+  template:
+    src: timezone.j2
+    dest: '/etc/timezone'
+
+# set localtime
+- name: set localtime
+  become: yes
+  copy:
+    src: '/usr/share/zoneinfo/{{ timezone }}'
+    dest: /etc/localtime
+
+# set /etc/default/keyboard
+- name: set /etc/default/keyboard
+  become: yes
+  template:
+    src: keyboard.j2
+    dest: /etc/default/keyboard

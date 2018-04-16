@@ -1,0 +1,12 @@
+[pi-setup]
+hornet-c-raspberry
+[pi-setup:vars]
+ansible_user=pi
+ansible_ssh_pass=raspberry
+
+
+[wifi]
+hornet-c-raspberry  hostname=hornet-c-raspberry dynv6=hornet-c-raspberry.dynv6.net token=$TOKEN
+[wifi:vars]
+ansible_user=pi
+ansible_ssh_pass=raspberry
