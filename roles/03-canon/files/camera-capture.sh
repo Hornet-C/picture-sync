@@ -1,9 +1,9 @@
 #!/bin/bash
-
+## edit the variables to your needs
 UPDATE_INTERVAL=5
 MOUNTPOINT="/tmp/canon"
 CAMERA_FOLDER=$MOUNTPOINT/store_*/DCIM/*CANON/
-OUTPUT="/tmp/foo"
+OUTPUT="/home/john/Pictures/camera-sync"
 USER=john_doe
 HOST=my-great-computer.example.lan
 RSYNC_OPTIONS="-r --delete -e ssh $CAMERA_FOLDER $USER@$HOST:$OUTPUT"

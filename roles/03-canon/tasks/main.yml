@@ -8,7 +8,6 @@
   with_items:
     - fuse
     - gphotofs
-    - gphotofs
     - rsync
 
 - name: edit /etc/fuse.conf
