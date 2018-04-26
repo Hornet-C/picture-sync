@@ -3,6 +3,8 @@ This repository contains a set of scripts to synchronize a (Canon) DSLR-cameras 
 
 The content of the SD-card is mirrored, so if you delete a photo on the camera, the photo will also be deleted in the destination folder. For my setup I use [rsync](https://linux.die.net/man/1/rsync) and [ssh](https://linux.die.net/man/1/ssh) to synchronize without a password.
 
+![](Overview.png)
+
 This repository contains:
 
 *  an [ansible](https://www.ansible.com/) role to configure the raspberrys
